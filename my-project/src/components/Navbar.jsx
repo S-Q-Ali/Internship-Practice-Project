@@ -1,50 +1,62 @@
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { FiTruck } from "react-icons/fi";
-import {Link} from "react-router-dom"
-export default function Navbar(){
-    return (
-        <>
-        <nav className="w-full bg-amber-100 z-50 px-4 py-6 flex justify-between items-center sticky">
-            <Link>
-            <div className="left-0 px-4 font-stretch-95% text-2xl">E-Commerce Website</div>
+import { Link } from "react-router-dom";
+import { IoSearchOutline } from "react-icons/io5";
+
+export default function Navbar() {
+  return (
+    <>
+      <nav className="w-full bg-amber-100 z-50 px-4 py-6 flex justify-between items-center sticky">
+        <Link to="/">
+          <div className="left-0 px-4 font-stretch-95% text-2xl">
+            E-Commerce Website
+          </div>
+        </Link>
+
+        <div className="relative w-3/12">
+          <input
+            type="text"
+            placeholder="Search Your Products Here.."
+            className="w-full rounded-4xl border-0 border-amber-300 py-2 p-2"
+          />
+          <span>
+            <button className=" absolute top-1 right-1 items-center py-1 px-2.5 text-2xl">
+                <IoSearchOutline />
+            </button>
+          </span>
+        </div>
+        <div className="text-center ">
+          <ul className="hidden md:flex gap-6 items-center">
+            <Link to="/">
+              <li>Home</li>
             </Link>
-            <div className="text-center ">
-                <ul className="hidden md:flex gap-6 items-center">
-                    <Link to="/">
-                    <li>Home</li>
-                    </Link>
-                    <Link to="/products">
-                    <li>Products</li>
-                    </Link>
-                    <Link to="/catagories">
-                    <li>Catagories</li>
-                    </Link>
-                    <Link to="/deals">
-                    <li>Deals</li>
-                    </Link>
-                    <Link to="/about">
-                    <li>About</li>
-                    </Link>
-                    <Link to="/contact">
-                    <li>Contact</li>
-                    </Link>
-                </ul>
-            </div>
-            <div>
-                <search></search>
-            </div>
-            <div className="flex gap-4 ">
-                <FiTruck size={24} className="transition-all duration-300 hover:scale-110 cursor-pointer" /> 
-                <FaRegUser size={24} className="transition-all duration-300 hover:scale-110 cursor-pointer" />
-                <MdOutlineShoppingBag size={24} className="transition-all duration-300 hover:scale-110 cursor-pointer" />
-            </div>
-        </nav>
-        </>
-    );
-};
-
-
+            <Link to="/products">
+              <li>Products</li>
+            </Link>
+            <Link to="/catagories">
+              <li>Catagories</li>
+            </Link>
+            <Link to="/deals">
+              <li>Deals</li>
+            </Link>
+            <Link to="/about">
+              <li>About</li>
+            </Link>
+            <Link to="/contact">
+              <li>Contact</li>
+            </Link>
+          </ul>
+        </div>
+        <div className="flex gap-4 ">
+          <FiTruck className="text-xl hover:text-2xl cursor-pointer transition-all duration-300 " />
+          <FaRegUser className="text-xl transition-all duration-300 hover:text-2xl cursor-pointer" />
+          <MdOutlineShoppingBag className="text-xl transition-all duration-300 hover:text-2xl cursor-pointer" />
+        </div>
+      </nav>
+    </>
+  );
+}
 
 // import { useState } from "react";
 // import { Link, useLocation } from "react-router-dom";
