@@ -8,6 +8,3 @@ export default defineConfig({
   plugins: [react(),tailwindcss()],
 })
 
-module.exports={
-  darkMode:'class'
-}

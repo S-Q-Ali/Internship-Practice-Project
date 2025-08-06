@@ -32,7 +32,8 @@ export default function Navbar({ darkMode, setDarkMode }) {
               <input
                 type="text"
                 placeholder="Search products, brands, categories..."
-                className="w-full pl-4 pr-12 py-2.5 text-zinc-900 placeholder:text-zinc-900 dark:placeholder:text-amber-50 border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
+                className="w-full pl-4 pr-12 py-2.5 text-zinc-900 placeholder:text-zinc-900 dark:placeholder:text-amber-50 border border-border border-amber-50 rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
+
               /> 
               <button className="dark:text-amber-50 absolute right-2 top-1/2 transform -translate-y-1/2 p-2  hover:text-brand transition-colors duration-200">
                 <FiSearch className="w-4 h-4" />
