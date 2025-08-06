@@ -63,7 +63,7 @@ export default function Hero() {
 
   useEffect(() => {
     // Auto-rotate products every 5 seconds
-    const interval = setInterval(nextProduct, 1000);
+    const interval = setInterval(nextProduct, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -73,14 +73,14 @@ export default function Hero() {
       gsap.from(titleRef.current, {
         y: 50,
         opacity: 0,
-        duration: 1.5,
+        duration: 1,
         ease: 'power3.out'
       });
 
       gsap.from(productRef.current, {
         y: 80,
         opacity: 0,
-        duration: 1.5,
+        duration: 1,
         ease: 'power3.out',
         delay: 0.3
       });
@@ -88,7 +88,7 @@ export default function Hero() {
       gsap.from(controlsRef.current, {
         y: 30,
         opacity: 0,
-        duration: 1.5,
+        duration: 1,
         ease: 'power3.out',
         delay: 0.6
       });

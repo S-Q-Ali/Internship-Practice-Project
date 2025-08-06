@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter } from "react-router-dom";
 import { useState,useEffect } from "react";
 import Hero from "./components/Hero";
+import Products from "./components/Products";
 export default function App() {
     const [darkMode,setDarkMode]=useState(false);
 
@@ -18,6 +19,7 @@ export default function App() {
       <BrowserRouter>
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <Hero />
+      <Products darkMode={darkMode} setDarkMode={setDarkMode} />
       </BrowserRouter>
       </div>
     </>
