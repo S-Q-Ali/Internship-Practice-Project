@@ -1,11 +1,21 @@
 import { Link } from "react-router-dom";
+import { 
+  FiSearch,
+  FiUser,
+  FiMenu,
+  FiX
+} from "react-icons/fi";
+import { RiShoppingCartLine } from "react-icons/ri";
+
+import { LuSunMoon,LuSun } from "react-icons/lu";
+
 import { useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="w-full bg-brand-light/50 backdrop-blur-sm border-b border-border sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white dark:bg-zinc-900 w-full bg-brand-light/50 backdrop-blur-sm border-b border-border sticky top-0 z-30 dark:text-amber-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2 group">
@@ -17,32 +27,20 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden md:flex flex-1 max-w-lg mx-8">
+          <div className=" md:flex flex-1 max-w-lg mx-8">
             <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Search products, brands, categories..."
-                className="w-full pl-4 pr-12 py-2.5 bg-background border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
-              />
-              <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-muted-foreground hover:text-brand transition-colors duration-200">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
+                className="w-full pl-4 pr-12 py-2.5 text-zinc-900 placeholder:text-zinc-900 dark:placeholder:text-amber-50 border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
+              /> 
+              <button className="dark:text-amber-50 absolute right-2 top-1/2 transform -translate-y-1/2 p-2  hover:text-brand transition-colors duration-200">
+                <FiSearch className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-4">
             <Link
               to="/"
               className="text-foreground hover:text-brand transition-colors duration-200 font-medium"
@@ -80,59 +78,29 @@ export default function Navbar() {
               Contact
             </Link>
           </div>
-
-          <div className="flex items-center space-x-4">
-            <button className="hidden sm:flex items-center space-x-1 text-muted-foreground hover:text-brand transition-colors duration-200 group">
-              <svg
-                className="w-5 h-5 group-hover:scale-110 transition-transform duration-200"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+          <div className="flex items-center m-3">
+            <button 
+              onClick={() => setDarkMode(!darkMode)} 
+              className="text-2xl hover:text-3xl transition-all duration-300 cursor-pointer"
+            >
+              {darkMode ? <LuSunMoon /> : <LuSun />}
+            </button>
+          </div>
+          <div className="flex items-center space-x-3">
+            <button className="hidden sm:flex items-center space-x-1 text-2xl hover:text-3xl transition-all duration-300 cursor-pointer">
               <span className="text-sm font-medium">Track</span>
             </button>
 
-            <button className="flex items-center space-x-1 text-muted-foreground hover:text-brand transition-colors duration-200 group">
-              <svg
-                className="w-5 h-5 group-hover:scale-110 transition-transform duration-200"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
+            <button className="flex items-center space-x-1">
+              <FiUser className="w-5 h-5 text-2xl hover:text-3xl transition-all duration-300 cursor-pointer" />
               <span className="hidden sm:inline text-sm font-medium">
                 Account
               </span>
             </button>
 
-            <button className="relative flex items-center space-x-1 text-muted-foreground hover:text-brand transition-colors duration-200 group">
+            <button className="relative flex items-center space-x-1 text-2xl hover:text-3xl transition-all duration-300 cursor-pointer">
               <div className="relative">
-                <svg
-                  className="w-5 h-5 group-hover:scale-110 transition-transform duration-200"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 7H6L5 9z"
-                  />
-                </svg>
+                <RiShoppingCartLine className="w-5 h-5 text-2xl hover:text-3xl transition-all duration-300 cursor-pointer" />
                 <span className="absolute -top-2 -right-2 h-4 w-4 bg-brand text-brand-foreground rounded-full flex items-center justify-center text-xs font-medium">
                   3
                 </span>
@@ -144,32 +112,12 @@ export default function Navbar() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 text-muted-foreground hover:text-brand transition-colors duration-200"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
+              {isMenuOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
             </button>
           </div>
         </div>
 
+        {/* Mobile search bar */}
         <div className="md:hidden pb-3">
           <div className="relative">
             <input
@@ -178,19 +126,7 @@ export default function Navbar() {
               className="w-full pl-4 pr-12 py-2.5 bg-background border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
             />
             <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-muted-foreground hover:text-brand transition-colors duration-200">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+              <FiSearch className="w-4 h-4" />
             </button>
           </div>
         </div>
