@@ -1,4 +1,10 @@
-import { useRef, useEffect, useState } from "react";
+import {
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -8,11 +14,17 @@ import {
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
-import keyboard_1 from "../../assets/headphones/image_1.png";
-import headphone_1 from "../../assets/headphones/image_2.png";
-import keyboard_2 from "../../assets/headphones/image_3.png";
-import keyboard_3 from "../../assets/headphones/image_4.png";
-import headphone_2 from "../../assets/headphones/image_5.png"
+
+import keyboard_1 from "../../assets/keyborads/keyboard_1.png";
+import keyboard_2 from "../../assets/keyborads/keyboard_2.png";
+import keyboard_3 from "../../assets/keyborads/keyboard_3.png";
+import headphone_1 from "../../assets/headphones/headphone_1.png";
+import headphone_2 from "../../assets/headphones/headphone_2.png";
+// import headphone_3 from "../../assets/headphones/headphone_3.png";
+import mouse_1 from "../../assets/mouses/mouse_1.png"
+import mouse_2 from "../../assets/mouses/mouse_2.png"
+import mouse_3 from "../../assets/mouses/mouse_3.png"
+
 gsap.registerPlugin(ScrollTrigger);
 
 const productData = [
@@ -24,7 +36,6 @@ const productData = [
     rating: 4.8,
     image: keyboard_1,
     features: ["RGB Backlit", "Tactile Switches", "Anti-Ghosting"],
-    animateDelay: 0.1,
   },
   {
     id: 2,
@@ -34,7 +45,6 @@ const productData = [
     rating: 4.7,
     image: headphone_1,
     features: ["7.1 Surround", "Noise Cancelling", "50mm Drivers"],
-    animateDelay: 0.3,
   },
   {
     id: 3,
@@ -44,47 +54,42 @@ const productData = [
     rating: 4.5,
     image: keyboard_2,
     features: ["87 Keys", "Low Profile", "Fast Actuation"],
-    animateDelay: 0.5,
   },
   {
     id: 4,
-    name: "Pro Gaming KeyBoard",
+    name: "Pro Gaming Keyboard",
     category: "keyboard",
     price: 199.99,
     rating: 4.9,
     image: keyboard_3,
-    features: ["Memory Foam", "Detachable Mic", "Hi-Res Audio"],
-    animateDelay: 0.7,
+    features: ["Premium Build", "Custom Switches", "USB-C Connection"],
   },
   {
     id: 5,
-    name: "Mechanical Gaming Keyboard",
-    category: "keyboard",
-    price: 129.99,
-    rating: 4.8,
-    image: keyboard_1,
-    features: ["RGB Backlit", "Tactile Switches", "Anti-Ghosting"],
-    animateDelay: 0.1,
+    name: "Pro Gaming Mouse",
+    category: "mouse",
+    price: 79.99,
+    rating: 4.6,
+    image: mouse_1,
+    features: ["Ultra-light", "Adjustable DPI", "RGB Lighting"],
   },
   {
     id: 6,
-    name: "Wireless Gaming Headset",
-    category: "headphone",
-    price: 159.99,
-    rating: 4.7,
-    image: headphone_2,
-    features: ["7.1 Surround", "Noise Cancelling", "50mm Drivers"],
-    animateDelay: 0.3,
+    name: "Ergonomic Wireless Mouse",
+    category: "mouse",
+    price: 69.99,
+    rating: 4.5,
+    image: mouse_2,
+    features: ["Ergonomic Shape", "Rechargeable", "Silent Clicks"],
   },
   {
     id: 7,
-    name: "Compact Tenkeyless Keyboard",
-    category: "keyboard",
-    price: 99.99,
-    rating: 4.5,
-    image: keyboard_2,
-    features: ["87 Keys", "Low Profile", "Fast Actuation"],
-    animateDelay: 0.5,
+    name: "High-Precision Gaming Mouse",
+    category: "mouse",
+    price: 89.99,
+    rating: 4.7,
+    image: mouse_3,
+    features: ["16K DPI", "Programmable Buttons", "Onboard Memory"],
   },
   {
     id: 8,
@@ -92,192 +97,132 @@ const productData = [
     category: "headphone",
     price: 199.99,
     rating: 4.9,
-    image: keyboard_3,
+    image: headphone_2,
     features: ["Memory Foam", "Detachable Mic", "Hi-Res Audio"],
-    animateDelay: 0.7,
   },
+  // {
+  //   id: 9,
+  //   name: "Studio Quality Headphones",
+  //   category: "headphone",
+  //   price: 249.99,
+  //   rating: 4.9,
+  //   image: headphone_3,
+  //   features: ["Studio-Grade Sound", "Comfort Fit", "Noise Isolation"],
+  // },
 ];
 
-const cardVariants = {
-  hidden: { y: 50, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 15,
-    },
-  },
-  hover: {
-    y: -10,
-    transition: { duration: 0.3 },
-  },
-};
 
-// Responsive breakpoints configuration
-const responsiveConfig = {
-  mobile: { items: 1, breakpoint: 640 },
-  tablet: { items: 2, breakpoint: 768 },
-  desktop: { items: 4, breakpoint: 1024 },
-};
 
 export default function Products() {
+  // slide index (which slide-group is visible)
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // visible cards per slide: default to desktop; will be corrected on mount/resize
   const [visibleCount, setVisibleCount] = useState(4);
+
   const sectionRef = useRef(null);
-  const sliderRef = useRef(null);
-  const cardsRef = useRef([]);
+  const trackRef = useRef(null);
+  const cardsRef = useRef([]); // refs for reveal animations
   const intervalRef = useRef(null);
-  
-  // Calculate total slides based on visibleCount
-  const totalSlides = Math.ceil(productData.length / visibleCount);
 
-  // Handle responsive visibility
+  // recompute chunks whenever visibleCount changes
+  const chunkedProducts = useMemo(() => {
+    const chunks = [];
+    const n = visibleCount;
+    for (let i = 0; i < productData.length; i += n) {
+      chunks.push(productData.slice(i, i + n));
+    }
+    return chunks;
+  }, [visibleCount]);
+
+  const totalSlides = chunkedProducts.length;
+
+  // clamp index when totalSlides changes (prevents out-of-range index)
   useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < responsiveConfig.mobile.breakpoint) {
-        setVisibleCount(1);
-      } else if (width < responsiveConfig.tablet.breakpoint) {
-        setVisibleCount(2);
-      } else if (width < responsiveConfig.desktop.breakpoint) {
-        setVisibleCount(3);
-      } else {
-        setVisibleCount(4);
-      }
-    };
+    if (currentIndex >= totalSlides) {
+      setCurrentIndex(Math.max(0, totalSlides - 1));
+    }
+  }, [totalSlides, currentIndex]);
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+  // responsive breakpoints (run on mount and on resize)
+  useEffect(() => {
+    const updateVisible = () => {
+      const w = window.innerWidth;
+      if (w < 640) setVisibleCount(1);
+      else if (w < 1024) setVisibleCount(2);
+      else setVisibleCount(4);
+    };
+    updateVisible();
+    window.addEventListener("resize", updateVisible);
+    return () => window.removeEventListener("resize", updateVisible);
   }, []);
 
-  // Initialize animations and auto-slide
-  useEffect(() => {
-  // Set initial state for cards
-  gsap.set(cardsRef.current, { opacity: 0, y: 20 });
-
-  // Section header animation
-  gsap.from(sectionRef.current.querySelector(".section-header"), {
-    y: 50,
-    opacity: 0,
-    duration: 0.8,
-    ease: "power2.out",
-    scrollTrigger: {
-      trigger: sectionRef.current,
-      start: "top 80%",
-      toggleActions: "play none none none",
-    },
-  });
-
-  // Define event handlers
-  const handleMouseEnter = (e) => {
-    gsap.to(e.currentTarget, {
-      y: -10,
-      duration: 0.3,
-      ease: "power2.out",
-    });
-  };
-
-  const handleMouseLeave = (e) => {
-    gsap.to(e.currentTarget, {
-      y: 0,
-      duration: 0.3,
-      ease: "power2.out",
-    });
-  };
-
-  // Card animations
-  cardsRef.current.forEach((card, index) => {
-    if (card) {
-      gsap.to(card, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        delay: index * 0.1,
-        ease: "back.out(1.2)",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      });
-
-      // Add event listeners with the defined handlers
-      card.addEventListener("mouseenter", handleMouseEnter);
-      card.addEventListener("mouseleave", handleMouseLeave);
-    }
-  });
-
-  // Auto-slide setup
-  const startAutoSlide = () => {
-    intervalRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % totalSlides);
-    }, 3000);
-  };
-
-  startAutoSlide();
-
-  return () => {
-    clearInterval(intervalRef.current);
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    
-    // Clean up event listeners with the same handlers
-    cardsRef.current.forEach((card) => {
-      if (card) {
-        card.removeEventListener("mouseenter", handleMouseEnter);
-        card.removeEventListener("mouseleave", handleMouseLeave);
-      }
-    });
-  };
-}, [totalSlides, visibleCount]);
-  // Slide animation
-  useEffect(() => {
-    if (sliderRef.current) {
-      gsap.to(sliderRef.current, {
-        x: -currentIndex * (100 / visibleCount) * sliderRef.current.offsetWidth / 100,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    }
-  }, [currentIndex, visibleCount]);
-
-  // Navigation functions
-  const goToNext = () => {
-    clearInterval(intervalRef.current);
-    setCurrentIndex((prev) => (prev + 1) % totalSlides);
-    resetAutoSlide();
-  };
-
-  const goToPrev = () => {
-    clearInterval(intervalRef.current);
-    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
-    resetAutoSlide();
-  };
-
-  const goToSlide = (index) => {
-    clearInterval(intervalRef.current);
-    setCurrentIndex(index);
-    resetAutoSlide();
-  };
-
-  const resetAutoSlide = () => {
+  // Autoplay (pause/resume on hover)
+  const startAuto = useCallback(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % totalSlides);
-    }, 3000);
+    }, 4000);
+  }, [totalSlides]);
+
+  const stopAuto = useCallback(() => {
+    clearInterval(intervalRef.current);
+  }, []);
+
+  useEffect(() => {
+    if (totalSlides > 1) startAuto();
+    return () => clearInterval(intervalRef.current);
+  }, [startAuto, totalSlides]);
+
+  // Card reveal animations (GSAP) — optional, and does not animate the track transform
+  useEffect(() => {
+    // reset refs array so we don't keep stale refs across chunk changes
+    cardsRef.current = cardsRef.current.slice(0, productData.length);
+
+    if (!sectionRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cardsRef.current.filter(Boolean),
+        { opacity: 0, y: 24, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.06,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, [chunkedProducts]); // re-run when chunks change
+
+  // compute track transform percent — shift by one viewport (slide) each increment
+  // note: translate% relative to the track; the needed percent is (currentIndex * (100 / totalSlides))%
+  const trackStyle = {
+    width: `${totalSlides * 100}%`,
+    transform: `translateX(-${currentIndex * (100 / totalSlides)}%)`,
+    transition: "transform 600ms cubic-bezier(.22,.9,.3,1)",
   };
 
   return (
     <section
       ref={sectionRef}
-      className="py-16 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 overflow-hidden"
+      className="py-16 bg-gradient-to-b from-black to-purple-300 dark:fron-black dark:to-gray-700 overflow-hidden"
     >
       <div className="container mx-auto px-4">
-        {/* Section Header */}
+        {/* Header */}
         <div className="section-header text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 mb-4 pb-2">
             Gaming Peripherals
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -285,24 +230,26 @@ export default function Products() {
           </p>
         </div>
 
-        {/* Slider Controls */}
+        {/* Controls */}
         <div className="flex justify-between items-center mb-8">
           <button
-            onClick={goToPrev}
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            disabled={currentIndex === 0}
+            aria-label="Previous"
+            onClick={() =>
+              setCurrentIndex((p) => (p - 1 + totalSlides) % totalSlides)
+            }
+            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300"
           >
             <FiChevronLeft size={24} />
           </button>
 
-          {/* Slide Indicators */}
           <div className="flex space-x-2">
-            {Array.from({ length: totalSlides }).map((_, index) => (
+            {Array.from({ length: totalSlides }).map((_, idx) => (
               <button
-                key={index}
-                onClick={() => goToSlide(index)}
+                key={idx}
+                aria-label={`Go to slide ${idx + 1}`}
+                onClick={() => setCurrentIndex(idx)}
                 className={`w-3 h-3 rounded-full transition-all ${
-                  index === currentIndex
+                  idx === currentIndex
                     ? "bg-purple-600 w-6"
                     : "bg-gray-300 dark:bg-gray-600"
                 }`}
@@ -311,88 +258,96 @@ export default function Products() {
           </div>
 
           <button
-            onClick={goToNext}
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            disabled={currentIndex >= totalSlides - 1}
+            aria-label="Next"
+            onClick={() => setCurrentIndex((p) => (p + 1) % totalSlides)}
+            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300"
           >
             <FiChevronRight size={24} />
           </button>
         </div>
 
-        {/* Products Slider */}
-        <div className="overflow-hidden relative mb-8">
-          <div
-            ref={sliderRef}
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ width: `${(productData.length / visibleCount) * 100}%` }}
-          >
-            {productData.map((product, index) => (
+        {/* Slider (viewport) */}
+        <div
+          className="overflow-hidden relative mb-8"
+          onMouseEnter={stopAuto}
+          onMouseLeave={startAuto}
+        >
+          {/* track */}
+          <div ref={trackRef} className="flex" style={trackStyle}>
+            {chunkedProducts.map((group, slideIndex) => (
+              // slide = viewport width; its width MUST be (100 / totalSlides)% of the track
               <div
-                key={product.id}
-                className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 px-2"
-                ref={(el) => (cardsRef.current[index] = el)}
-                style={{ opacity: 0 }}
+                key={slideIndex}
+                className="flex"
+                style={{ width: `${100 / totalSlides}%` }}
               >
-                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform will-change-transform h-full">
-                  {/* Product Image */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-105"
-                    />
-                    <div className="absolute top-2 right-2 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      {product.category === "headphone" ? "Headset" : "Keyboard"}
-                    </div>
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-lg text-gray-900 dark:text-white">
-                        {product.name}
-                      </h3>
-                      <div className="flex items-center text-yellow-500">
-                        <FiStar className="mr-1" />
-                        <span className="text-sm font-medium">
-                          {product.rating}
-                        </span>
+                {/* each card inside slide gets width = 100 / visibleCount of the slide */}
+                {group.map((product, i) => {
+                  const cardIndex = slideIndex * visibleCount + i;
+                  return (
+                    <div
+                      key={product.id}
+                      className="px-2"
+                      style={{ width: `${100 / visibleCount}%` }}
+                      ref={(el) => (cardsRef.current[cardIndex] = el)}
+                    >
+                      <div className="from-purple-300 to-zinc-900 dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                        <div className="relative h-48 overflow-hidden">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-105"
+                          />
+                          <div className="absolute top-2 right-2 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                            {product.category === "headphone"
+                              ? "Headset"
+                              : "Keyboard"}
+                          </div>
+                        </div>
+                        <div className="p-6">
+                          <div className="flex justify-between items-start mb-2">
+                            <h3 className="font-bold text-lg">
+                              {product.name}
+                            </h3>
+                            <div className="flex items-center text-yellow-500">
+                              <FiStar className="mr-1" />
+                              <span className="text-sm font-medium">
+                                {product.rating}
+                              </span>
+                            </div>
+                          </div>
+                          <ul className="mb-4">
+                            {product.features.map((f, idx) => (
+                              <li
+                                key={idx}
+                                className="flex items-center text-sm text-gray-900 dark:text-gray-300 mb-1"
+                              >
+                                <span className="w-1.5 h-1.5 bg-purple-500 rounded-full mr-2" />
+                                {f}
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="flex justify-between items-center">
+                            <span className="text-xl font-bold">
+                              ${product.price}
+                            </span>
+                            <button className="flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:from-purple-700 hover:to-blue-700">
+                              <FiShoppingCart className="mr-2" /> Add to Cart
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-
-                    {/* Features List */}
-                    <ul className="mb-4">
-                      {product.features.map((feature, i) => (
-                        <li
-                          key={i}
-                          className="flex items-center text-sm text-gray-600 dark:text-gray-300 mb-1"
-                        >
-                          <span className="w-1.5 h-1.5 bg-purple-500 rounded-full mr-2"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Price & CTA */}
-                    <div className="flex justify-between items-center">
-                      <span className="text-xl font-bold text-gray-900 dark:text-white">
-                        ${product.price}
-                      </span>
-                      <button className="flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-purple-700 hover:to-blue-700 transition-all">
-                        <FiShoppingCart className="mr-2" />
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
             ))}
           </div>
         </div>
 
-        {/* View All CTA */}
+        {/* CTA */}
         <div className="text-center mt-12">
-          <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transition-all">
+          <button className="inline-flex items-center px-6 py-3 rounded-md text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
             View All Products
             <FiArrowRight className="ml-2" />
           </button>

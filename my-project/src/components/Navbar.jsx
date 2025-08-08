@@ -6,16 +6,15 @@ import {
   FiX
 } from "react-icons/fi";
 import { RiShoppingCartLine } from "react-icons/ri";
-
 import { LuSunMoon,LuSun } from "react-icons/lu";
-
 import { useState } from "react";
+import CategoryPage from "./Categories";
 
 export default function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white dark:bg-zinc-900 w-full bg-brand-light/50 backdrop-blur-sm border-b border-border sticky top-0 z-30 dark:text-amber-50 shadow-sm">
+    <nav className="bg-gradient-to-r to-purple-900/60 from-zinc-900 w-full backdrop-blur-sm border-b border-border sticky top-0 z-30 text-amber-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2 group">
@@ -32,7 +31,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
               <input
                 type="text"
                 placeholder="Search products, brands, categories..."
-                className="w-full pl-4 pr-12 py-2.5 text-zinc-900 placeholder:text-zinc-900 dark:placeholder:text-amber-50 border border-border border-amber-50 rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
+                className="w-full pl-4 pr-12 py-2.5 text-zinc-900 placeholder:text-amber-50 border border-border border-amber-50 rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
 
               /> 
               <button className="dark:text-amber-50 absolute right-2 top-1/2 transform -translate-y-1/2 p-2  hover:text-brand transition-colors duration-200">

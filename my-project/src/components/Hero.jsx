@@ -4,10 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 
-import headphone1 from '../../assets/headphones/image_1.png';
-import keyboard1 from '../../assets/headphones/image_2.png';
-import keyboard2 from '../../assets/headphones/image_3.png';
-import headphone2 from '../../assets/headphones/image_4.png';
+import headphone1 from '../../assets/headphones/headphone_1.png';
+import keyboard1 from '../../assets/keyborads/keyboard_1.png';
+import keyboard2 from '../../assets/keyborads/keyboard_2.png';
+import headphone2 from '../../assets/headphones/headphone_2.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
