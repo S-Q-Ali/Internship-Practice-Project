@@ -12,7 +12,7 @@ export default function CategorySection() {
   return (
     <section className="flex w-full bg-gradient-to-b from-black to-zinc-950 py-16">
       <div className="w-full flex flex-col items-center text-center">
-        <h1 className="text-amber-50 text-4xl font-semibold mb-14">
+        <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500  mb-14">
           SHOP BY CATEGORY
         </h1>
 
