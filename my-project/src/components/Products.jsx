@@ -223,7 +223,7 @@ export default function Products() {
         {/* Header */}
         <div className="section-header text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 mb-4 pb-2">
-            Gaming Peripherals
+            GAMING PERIPHIRALS
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Premium gear designed for competitive gamers and streamers
