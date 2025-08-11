@@ -1,15 +1,7 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { FiClock, FiChevronRight } from "react-icons/fi";
-import keyboard_1 from "../../assets/keyborads/keyboard_1.png";
-import keyboard_2 from "../../assets/keyborads/keyboard_2.png";
-import keyboard_3 from "../../assets/keyborads/keyboard_3.png";
-import headphone_1 from "../../assets/headphones/headphone_1.png";
-import headphone_2 from "../../assets/headphones/headphone_2.png";
-// import headphone_3 from "../../assets/headphones/headphone_3.png";
-import mouse_1 from "../../assets/mouses/mouse_1.png";
-import mouse_2 from "../../assets/mouses/mouse_2.png";
-import mouse_3 from "../../assets/mouses/mouse_3.png";
+import {deals} from "../data/data"
 
 /* ---------------------------
   Helper: chunk array into pages
@@ -236,95 +228,3 @@ export default function DealsSection() {
   );
 }
 
-const deals = [
-  {
-    id: 1,
-    title: "Mechanical Gaming Keyboard",
-    discount: "15% OFF",
-    originalPrice: "$152.93",
-    dealPrice: "$129.99",
-    image: keyboard_1,
-    endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-    features: ["RGB Backlit", "Tactile Switches", "Anti-Ghosting"],
-  },
-  {
-    id: 2,
-    title: "Wireless Gaming Headset",
-    discount: "12% OFF",
-    originalPrice: "$181.81",
-    dealPrice: "$159.99",
-    image: headphone_1,
-    endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-    features: ["7.1 Surround", "Noise Cancelling", "50mm Drivers"],
-  },
-  {
-    id: 3,
-    title: "Compact Tenkeyless Keyboard",
-    discount: "10% OFF",
-    originalPrice: "$111.10",
-    dealPrice: "$99.99",
-    image: keyboard_2,
-    endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-    features: ["87 Keys", "Low Profile", "Fast Actuation"],
-  },
-  {
-    id: 4,
-    title: "Pro Gaming Keyboard",
-    discount: "20% OFF",
-    originalPrice: "$249.99",
-    dealPrice: "$199.99",
-    image: keyboard_3,
-    endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-    features: ["Premium Build", "Custom Switches", "USB-C Connection"],
-  },
-  {
-    id: 5,
-    title: "Pro Gaming Mouse",
-    discount: "20% OFF",
-    originalPrice: "$99.99",
-    dealPrice: "$79.99",
-    image: mouse_1,
-    endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-    features: ["Ultra-light", "Adjustable DPI", "RGB Lighting"],
-  },
-  {
-    id: 6,
-    title: "Ergonomic Wireless Mouse",
-    discount: "14% OFF",
-    originalPrice: "$81.39",
-    dealPrice: "$69.99",
-    image: mouse_2,
-    endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-    features: ["Ergonomic Shape", "Rechargeable", "Silent Clicks"],
-  },
-  {
-    id: 7,
-    title: "High-Precision Gaming Mouse",
-    discount: "11% OFF",
-    originalPrice: "$100.89",
-    dealPrice: "$89.99",
-    image: mouse_3,
-    endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-    features: ["16K DPI", "Programmable Buttons", "Onboard Memory"],
-  },
-  {
-    id: 8,
-    title: "Pro Gaming Headphones",
-    discount: "20% OFF",
-    originalPrice: "$249.99",
-    dealPrice: "$199.99",
-    image: headphone_2,
-    endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-    features: ["Memory Foam", "Detachable Mic", "Hi-Res Audio"],
-  },
-  // {
-  //   id: 9,
-  //   title: "Studio Quality Headphones",
-  //   discount: "16% OFF",
-  //   originalPrice: "$297.61",
-  //   dealPrice: "$249.99",
-  //   image: headphone_3,
-  //   endTime: new Date(Date.now() + 5 * 60 * 60 * 1000),
-  //   features: ["Studio-Grade Sound", "Comfort Fit", "Noise Isolation"],
-  // },
-];

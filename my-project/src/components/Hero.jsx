@@ -1,50 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FiArrowRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import {heroProducts} from "../data/data"
 
-import headphone1 from "../../assets/headphones/headphone_1.png";
-import keyboard1 from "../../assets/keyborads/keyboard_1.png";
-import keyboard2 from "../../assets/keyborads/keyboard_2.png";
-import headphone2 from "../../assets/headphones/headphone_2.png";
+
+import Button from "./Button";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const products = [
-  {
-    id: 1,
-    name: "Mechanical Gaming Keyboard",
-    description: "RGB backlit with ultra-responsive switches",
-    price: "$129.99",
-    image: keyboard1,
-    type: "keyboard",
-  },
-  {
-    id: 2,
-    name: "Wireless Gaming Headset",
-    description: "7.1 surround sound with noise cancellation",
-    price: "$159.99",
-    image: headphone1,
-    type: "headphone",
-  },
-  {
-    id: 3,
-    name: "Compact Tenkeyless Keyboard",
-    description: "Perfect for FPS gaming with fast actuation",
-    price: "$99.99",
-    image: keyboard2,
-    type: "keyboard",
-  },
-  {
-    id: 4,
-    name: "Pro Gaming Headphones",
-    description: "50mm drivers for immersive audio",
-    price: "$199.99",
-    image: headphone2,
-    type: "headphone",
-  },
-];
 
 export default function Hero() {
   const navigate = useNavigate();
@@ -59,15 +23,15 @@ export default function Hero() {
   const controlsRef = useRef(null);
 
   const nextProduct = () => {
-    setActiveIndex((prev) => (prev + 1) % products.length);
+    setActiveIndex((prev) => (prev + 1) % heroProducts.length);
   };
 
   const prevProduct = () => {
-    setActiveIndex((prev) => (prev - 1 + products.length) % products.length);
+    setActiveIndex((prev) => (prev - 1 + heroProducts.length) % heroProducts.length);
   };
 
   useEffect(() => {
-    // Auto-rotate products every 5 seconds
+    // Auto-rotate heroProducts every 5 seconds
     const interval = setInterval(nextProduct, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -133,12 +97,12 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <button onClick={()=>handleCategoryClick("keyboards")} className="cursor-pointer px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center">
-                Shop Keyboards <FiArrowRight className="ml-2" />
-              </button>
-              <button onClick={()=>handleCategoryClick("headphones")} className="cursor-pointer px-8 py-3 bg-gray-800 rounded-lg text-white font-medium hover:bg-gray-700 transition-all duration-300">
+              <Button handleclick={()=>handleCategoryClick("keyboards")} styles={"cursor-pointer px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center"}>
+                Shop Keyboards
+              </Button>
+              <Button handleclick={()=>handleCategoryClick("headphones")} styles={"cursor-pointer px-8 py-3 bg-gray-800 rounded-lg text-white font-medium hover:bg-gray-700 transition-all duration-300"}>
                 Shop Headphones
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -150,21 +114,21 @@ export default function Hero() {
             >
               <div className="relative h-64 md:h-80 w-full">
                 <img
-                  src={products[activeIndex].image}
-                  alt={products[activeIndex].name}
+                  src={heroProducts[activeIndex].image}
+                  alt={heroProducts[activeIndex].name}
                   className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
                 />
               </div>
 
               <div className="mt-6 text-center">
                 <h3 className="text-2xl font-bold text-white">
-                  {products[activeIndex].name}
+                  {heroProducts[activeIndex].name}
                 </h3>
                 <p className="text-gray-300 mt-2">
-                  {products[activeIndex].description}
+                  {heroProducts[activeIndex].description}
                 </p>
                 <p className="text-xl text-purple-400 font-bold mt-4">
-                  {products[activeIndex].price}
+                  {heroProducts[activeIndex].price}
                 </p>
               </div>
             </div>
@@ -182,7 +146,7 @@ export default function Hero() {
               </button>
 
               <div className="flex space-x-2">
-                {products.map((_, index) => (
+                {heroProducts.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setActiveIndex(index)}
