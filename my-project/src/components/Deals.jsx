@@ -128,8 +128,8 @@ export default function DealsSection() {
       <div className="container mx-auto px-4">
         {/* header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500">
-            Hot Deals
+          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-800 to-orange-500">
+            HOT DEALS
           </h2>
           <p className="text-gray-600 dark:text-gray-300">
             Limited-time offers on premium gaming gear

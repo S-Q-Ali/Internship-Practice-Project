@@ -8,7 +8,6 @@ import {
 import { RiShoppingCartLine } from "react-icons/ri";
 import { LuSunMoon,LuSun } from "react-icons/lu";
 import { useState } from "react";
-import CategoryPage from "./Categories";
 
 export default function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,7 +52,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
             >
               Products
             </Link>
-            <Link
+            {/* <Link
               to="/categories"
               className="text-foreground hover:text-brand transition-colors duration-200 font-medium"
             >
@@ -64,7 +63,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
               className="text-foreground hover:text-brand transition-colors duration-200 font-medium"
             >
               Deals
-            </Link>
+            </Link> */}
             <Link
               to="/about"
               className="text-foreground hover:text-brand transition-colors duration-200 font-medium"
