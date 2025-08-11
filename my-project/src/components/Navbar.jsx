@@ -13,7 +13,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-gradient-to-r to-purple-900/60 from-zinc-900 w-full backdrop-blur-sm border-b border-border sticky top-0 z-30 text-amber-50 shadow-sm">
+    <nav className="bg-gradient-to-r to-purple-900/60 via-red-400/60 from-zinc-900 w-full backdrop-blur-sm border-b border-border sticky top-0 z-30 text-amber-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2 group">
