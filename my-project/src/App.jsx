@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Hero from "./components/Hero";
 import Products from "./components/Products";
 import DealsSection from "./components/Deals";
-import CategoryPage from "./components/Categories"; // ✅ Make sure this file exists
+import CategoryPage from "./components/Categories";
+import CategorySection from "./components/CategorySection";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -28,6 +29,7 @@ export default function App() {
             element={
               <>
                 <Hero />
+                <CategorySection darkMode={darkMode} setDarkMode={setDarkMode} />
                 <Products darkMode={darkMode} setDarkMode={setDarkMode} />
                 <DealsSection darkMode={darkMode} setDarkMode={setDarkMode} />
               </>
