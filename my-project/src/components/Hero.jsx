@@ -133,10 +133,10 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <button onClick={()=>handleCategoryClick("keyboards")} className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center">
+              <button onClick={()=>handleCategoryClick("keyboards")} className="cursor-pointer px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center">
                 Shop Keyboards <FiArrowRight className="ml-2" />
               </button>
-              <button onClick={()=>handleCategoryClick("headphones")} className="px-8 py-3 bg-gray-800 rounded-lg text-white font-medium hover:bg-gray-700 transition-all duration-300">
+              <button onClick={()=>handleCategoryClick("headphones")} className="cursor-pointer px-8 py-3 bg-gray-800 rounded-lg text-white font-medium hover:bg-gray-700 transition-all duration-300">
                 Shop Headphones
               </button>
             </div>
