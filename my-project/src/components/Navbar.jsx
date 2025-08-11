@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
-import { 
-  FiSearch,
-  FiUser,
-  FiMenu,
-  FiX
-} from "react-icons/fi";
+import { FiSearch, FiUser, FiMenu, FiX,FiHeart } from "react-icons/fi";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { LuSunMoon,LuSun } from "react-icons/lu";
+import { LuSunMoon, LuSun } from "react-icons/lu";
 import { useState } from "react";
 
 export default function Navbar({ darkMode, setDarkMode }) {
@@ -31,8 +26,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
                 type="text"
                 placeholder="Search products, brands, categories..."
                 className="w-full pl-4 pr-12 py-2.5 text-zinc-900 placeholder:text-amber-50 border border-border border-amber-50 rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
-
-              /> 
+              />
               <button className="dark:text-amber-50 absolute right-2 top-1/2 transform -translate-y-1/2 p-2  hover:text-brand transition-colors duration-200">
                 <FiSearch className="w-4 h-4" />
               </button>
@@ -78,8 +72,8 @@ export default function Navbar({ darkMode, setDarkMode }) {
             </Link>
           </div>
           <div className="flex items-center m-3">
-            <button 
-              onClick={() => setDarkMode(!darkMode)} 
+            <button
+              onClick={() => setDarkMode(!darkMode)}
               className="text-2xl hover:text-3xl transition-all duration-300 cursor-pointer"
             >
               {darkMode ? <LuSunMoon /> : <LuSun />}
@@ -107,11 +101,19 @@ export default function Navbar({ darkMode, setDarkMode }) {
               <span className="hidden sm:inline text-sm font-medium">Cart</span>
             </button>
 
+            <button className="w-5 h-5 text-2xl transition-all duration-300 cursor-pointer hover:text-3xl">
+              <FiHeart size={20} />
+            </button>
+
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 text-muted-foreground hover:text-brand transition-colors duration-200"
             >
-              {isMenuOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
+              {isMenuOpen ? (
+                <FiX className="w-5 h-5" />
+              ) : (
+                <FiMenu className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>

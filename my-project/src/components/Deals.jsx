@@ -124,90 +124,115 @@ export default function DealsSection() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b  from-purple-300 via-red-700 to-red-800 dark:from-teal-800 dark:to-gray-950 overflow-hidden">
-  <div className="container mx-auto px-4">
-    {/* header */}
-    <div className="text-center mb-8">
-      <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-orange-700 to-red-400 mb-2">
-        HOT DEALS
-      </h2>
-      <p className="text-gray-700 dark:text-gray-300">
-        Limited-time offers on premium gaming gear
-      </p>
-    </div>
+    <section className="py-20 bg-gradient-to-b from-purple-300 via-red-700 to-red-800 dark:from-gray-700 dark:via-zinc-900 dark:to-zinc-950 overflow-hidden">
+      <div className="container mx-auto px-4">
+        {/* header */}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-orange-700 to-red-400 mb-2">
+            HOT DEALS
+          </h2>
+          <p className="text-gray-700 dark:text-gray-300">
+            Limited-time offers on premium gaming gear
+          </p>
+        </div>
 
-    {/* controls */}
-    <div className="flex justify-center mb-4 gap-2">
-      <button onClick={prev} className="p-2 bg-gradient-to-r from-amber-500 to-yellow-300 rounded-md text-black font-semibold shadow-md hover:scale-105 transition">
-        Prev
-      </button>
-      <button onClick={next} className="p-2 bg-gradient-to-r from-amber-500 to-yellow-300 rounded-md text-black font-semibold shadow-md hover:scale-105 transition">
-        Next
-      </button>
-    </div>
+        {/* controls */}
+        <div className="flex justify-center mb-4 gap-2">
+          <button
+            onClick={prev}
+            className="p-2 bg-gradient-to-r from-amber-500 to-yellow-300 rounded-md text-black font-semibold shadow-md hover:scale-105 transition"
+          >
+            Prev
+          </button>
+          <button
+            onClick={next}
+            className="p-2 bg-gradient-to-r from-amber-500 to-yellow-300 rounded-md text-black font-semibold shadow-md hover:scale-105 transition"
+          >
+            Next
+          </button>
+        </div>
 
-    {/* slider */}
-    <div className="overflow-hidden">
-      <div ref={sliderRef} className="flex" style={trackStyle}>
-        {pages.map((page, pageIdx) => (
-          <div key={pageIdx} className="flex" style={{ width: `${100 / slidesCount}%` }}>
-            {page.map((deal) => (
-              <div key={deal.id} className="p-4" style={{ width: `${100 / cardsPerPage}%` }}>
-                <div className="deal-card relative dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                  
-                  {/* discount badge */}
-                  <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold py-1 px-3 rounded-full shadow-md z-10">
-                    {deal.discount}
-                  </div>
+        {/* slider */}
+        <div className="overflow-hidden">
+          <div ref={sliderRef} className="flex" style={trackStyle}>
+            {pages.map((page, pageIdx) => (
+              <div
+                key={pageIdx}
+                className="flex"
+                style={{ width: `${100 / slidesCount}%` }}
+              >
+                {page.map((deal) => (
+                  <div
+                    key={deal.id}
+                    className="p-4"
+                    style={{ width: `${100 / cardsPerPage}%` }}
+                  >
+                    <div className="deal-card relative dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                      {/* discount badge */}
+                      <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold py-1 px-3 rounded-full shadow-md z-10">
+                        {deal.discount}
+                      </div>
 
-                  <div className="h-40 flex items-center justify-center dark:bg-gray-700">
-                    <img src={deal.image} alt={deal.title} className="max-h-full p-2" />
-                  </div>
+                      <div className="h-40 flex items-center justify-center dark:bg-gray-700">
+                        <img
+                          src={deal.image}
+                          alt={deal.title}
+                          className="max-h-full p-2"
+                        />
+                      </div>
 
-                  <div className="p-4">
-                    <h3 className="font-bold text-lg dark:text-zinc-200">{deal.title}</h3>
-                    <ul className="text-sm text-gray-700 dark:text-gray-300 mb-3">
-                      {deal.features.map((f, i) => (
-                        <li key={i}>• {f}</li>
-                      ))}
-                    </ul>
+                      <div className="p-4">
+                        <h3 className="font-bold text-lg dark:text-zinc-200">
+                          {deal.title}
+                        </h3>
+                        <ul className="text-sm text-amber-400 dark:text-gray-300 mb-3">
+                          {deal.features.map((f, i) => (
+                            <li key={i}>• {f}</li>
+                          ))}
+                        </ul>
 
-                    <div className="flex items-center justify-between text-xl py-2">
-                      <span className="line-through text-amber-500">{deal.originalPrice}</span>
-                      <span className="font-semibold text-yellow-300">{deal.dealPrice}</span>
+                        <div className="flex items-center justify-between text-xl py-2">
+                          <span className="line-through text-amber-500">
+                            {deal.originalPrice}
+                          </span>
+                          <span className="font-semibold text-yellow-300">
+                            {deal.dealPrice}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-700 p-2 rounded">
+                          <FiClock className="text-amber-400" />
+                          <span className="font-mono text-red-500 dark:text-yellow-400">
+                            {deal.timeLeft}
+                          </span>
+                        </div>
+
+                        <button className="w-full mt-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold py-2 rounded-lg flex items-center justify-center hover:scale-105 transition">
+                          Grab Deal <FiChevronRight className="ml-2" />
+                        </button>
+                      </div>
                     </div>
-
-                    <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-700 p-2 rounded">
-                      <FiClock className="text-amber-400" />
-                      <span className="font-mono text-emerald-500 dark:text-yellow-400">{deal.timeLeft}</span>
-                    </div>
-
-                    <button className="w-full mt-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold py-2 rounded-lg flex items-center justify-center hover:scale-105 transition">
-                      Grab Deal <FiChevronRight className="ml-2" />
-                    </button>
                   </div>
-
-                </div>
+                ))}
               </div>
             ))}
           </div>
-        ))}
+        </div>
+
+        {/* indicators */}
+        <div className="flex justify-center gap-2 mt-6">
+          {Array.from({ length: slidesCount }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setSlideIndex(i)}
+              className={`w-3 h-3 rounded-full ${
+                i === slideIndex ? "bg-amber-500 w-6" : "bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
       </div>
-    </div>
-
-    {/* indicators */}
-    <div className="flex justify-center gap-2 mt-6">
-      {Array.from({ length: slidesCount }).map((_, i) => (
-        <button
-          key={i}
-          onClick={() => setSlideIndex(i)}
-          className={`w-3 h-3 rounded-full ${i === slideIndex ? "bg-amber-500 w-6" : "bg-gray-300"}`}
-        />
-      ))}
-    </div>
-  </div>
-</section>
-
+    </section>
   );
 }
 
