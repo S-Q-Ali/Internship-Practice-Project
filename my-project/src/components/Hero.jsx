@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FiArrowRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
-
-import headphone1 from '../../assets/headphones/headphone_1.png';
-import keyboard1 from '../../assets/keyborads/keyboard_1.png';
-import keyboard2 from '../../assets/keyborads/keyboard_2.png';
-import headphone2 from '../../assets/headphones/headphone_2.png';
+import headphone1 from "../../assets/headphones/headphone_1.png";
+import keyboard1 from "../../assets/keyborads/keyboard_1.png";
+import keyboard2 from "../../assets/keyborads/keyboard_2.png";
+import headphone2 from "../../assets/headphones/headphone_2.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +18,7 @@ const products = [
     description: "RGB backlit with ultra-responsive switches",
     price: "$129.99",
     image: keyboard1,
-    type: "keyboard"
+    type: "keyboard",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const products = [
     description: "7.1 surround sound with noise cancellation",
     price: "$159.99",
     image: headphone1,
-    type: "headphone"
+    type: "headphone",
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const products = [
     description: "Perfect for FPS gaming with fast actuation",
     price: "$99.99",
     image: keyboard2,
-    type: "keyboard"
+    type: "keyboard",
   },
   {
     id: 4,
@@ -42,11 +42,16 @@ const products = [
     description: "50mm drivers for immersive audio",
     price: "$199.99",
     image: headphone2,
-    type: "headphone"
-  }
+    type: "headphone",
+  },
 ];
 
 export default function Hero() {
+  const navigate = useNavigate();
+  const handleCategoryClick = (category) => {
+    navigate("/categories", { state: { scrollTo: category } });
+  };
+
   const [activeIndex, setActiveIndex] = useState(0);
   const heroRef = useRef(null);
   const titleRef = useRef(null);
@@ -74,27 +79,28 @@ export default function Hero() {
         y: 50,
         opacity: 0,
         duration: 1,
-        ease: 'power3.out'
+        ease: "power3.out",
       });
 
       gsap.from(productRef.current, {
         y: 80,
         opacity: 0,
         duration: 1,
-        ease: 'power3.out',
-        delay: 0.3
+        ease: "power3.out",
+        delay: 0.3,
       });
 
       gsap.from(controlsRef.current, {
         y: 30,
         opacity: 0,
         duration: 1,
-        ease: 'power3.out',
-        delay: 0.6
+        ease: "power3.out",
+        delay: 0.6,
       });
 
       // Product change animation
-      gsap.fromTo(productRef.current,
+      gsap.fromTo(
+        productRef.current,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 5 }
       );
@@ -102,7 +108,7 @@ export default function Hero() {
   }, [activeIndex]);
 
   return (
-    <section 
+    <section
       ref={heroRef}
       className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-gray-900 to-black"
     >
@@ -116,7 +122,7 @@ export default function Hero() {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           {/* Text content */}
           <div className="lg:w-1/2 text-center lg:text-left">
-            <h1 
+            <h1
               ref={titleRef}
               className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500 mb-6"
             >
@@ -125,12 +131,12 @@ export default function Hero() {
             <p className="text-xl text-gray-300 mb-8 max-w-lg mx-auto lg:mx-0">
               Premium gaming peripherals designed for performance and style
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center">
+              <button onClick={()=>handleCategoryClick("keyboards")} className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center">
                 Shop Keyboards <FiArrowRight className="ml-2" />
               </button>
-              <button className="px-8 py-3 bg-gray-800 rounded-lg text-white font-medium hover:bg-gray-700 transition-all duration-300">
+              <button onClick={()=>handleCategoryClick("headphones")} className="px-8 py-3 bg-gray-800 rounded-lg text-white font-medium hover:bg-gray-700 transition-all duration-300">
                 Shop Headphones
               </button>
             </div>
@@ -138,7 +144,7 @@ export default function Hero() {
 
           {/* Product showcase */}
           <div className="lg:w-1/2 relative">
-            <div 
+            <div
               ref={productRef}
               className="relative bg-gray-800/50 backdrop-blur-md rounded-2xl overflow-hidden border border-gray-700/50 p-6"
             >
@@ -149,37 +155,47 @@ export default function Hero() {
                   className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
                 />
               </div>
-              
+
               <div className="mt-6 text-center">
-                <h3 className="text-2xl font-bold text-white">{products[activeIndex].name}</h3>
-                <p className="text-gray-300 mt-2">{products[activeIndex].description}</p>
-                <p className="text-xl text-purple-400 font-bold mt-4">{products[activeIndex].price}</p>
+                <h3 className="text-2xl font-bold text-white">
+                  {products[activeIndex].name}
+                </h3>
+                <p className="text-gray-300 mt-2">
+                  {products[activeIndex].description}
+                </p>
+                <p className="text-xl text-purple-400 font-bold mt-4">
+                  {products[activeIndex].price}
+                </p>
               </div>
             </div>
 
             {/* Product controls */}
-            <div 
+            <div
               ref={controlsRef}
               className="flex justify-between items-center mt-6"
             >
-              <button 
+              <button
                 onClick={prevProduct}
                 className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 text-white transition-all"
               >
                 <FiChevronLeft size={24} />
               </button>
-              
+
               <div className="flex space-x-2">
                 {products.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setActiveIndex(index)}
-                    className={`w-3 h-3 rounded-full transition-all ${index === activeIndex ? 'bg-purple-500 w-6' : 'bg-gray-600'}`}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                      index === activeIndex
+                        ? "bg-purple-500 w-6"
+                        : "bg-gray-600"
+                    }`}
                   />
                 ))}
               </div>
-              
-              <button 
+
+              <button
                 onClick={nextProduct}
                 className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 text-white transition-all"
               >
@@ -193,14 +209,16 @@ export default function Hero() {
       {/* Floating gaming elements */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="flex space-x-4">
-          {['RGB', 'Mechanical', 'Wireless', 'Surround'].map((feature, index) => (
-            <span 
-              key={index}
-              className="px-4 py-2 bg-gray-800/50 backdrop-blur-sm rounded-full text-sm text-white"
-            >
-              {feature}
-            </span>
-          ))}
+          {["RGB", "Mechanical", "Wireless", "Surround"].map(
+            (feature, index) => (
+              <span
+                key={index}
+                className="px-4 py-2 bg-gray-800/50 backdrop-blur-sm rounded-full text-sm text-white"
+              >
+                {feature}
+              </span>
+            )
+          )}
         </div>
       </div>
     </section>
