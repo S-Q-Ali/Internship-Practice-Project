@@ -16,10 +16,15 @@ import {
 } from "react-icons/fi";
 import {productData} from "../data/data"
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 gsap.registerPlugin(ScrollTrigger);
 
 
 export default function Products() {
+  const navigate=useNavigate();
+  const handleViewProduct=(category)=>{
+    navigate("/categories",{state:{scrollTo:category}});
+  }
   // slide index (which slide-group is visible)
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -253,7 +258,7 @@ export default function Products() {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <Button styles={"inline-flex items-center px-6 py-3 rounded-md text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"}>
+          <Button handleclick={()=>handleViewProduct('category')} styles={"inline-flex items-center px-6 py-3 rounded-md text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"}>
             View All Products
             <FiArrowRight className="ml-2" />
           </Button>
