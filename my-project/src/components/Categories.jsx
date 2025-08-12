@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { FiShoppingCart, FiHeart } from "react-icons/fi";
 import {categories} from "../data/data"
+import Button from "../components/Button"
 
 
 
@@ -44,9 +45,9 @@ const CategoryPage = () => {
                 className="relative bg-white rounded-2xl shadow-lg overflow-hidden p-4 cursor-pointer hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] hover:scale-[1.05] transition-all duration-300 group"
               >
                 {/* Wishlist Button */}
-                <button className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md hover:bg-red-500 hover:text-white transition-colors">
+                <Button styles={"absolute top-3 right-3 bg-white p-2 rounded-full shadow-md hover:bg-red-500 hover:text-white transition-colors"}>
                   <FiHeart size={20} />
-                </button>
+                </Button>
 
                 {/* Product Image */}
                 <img src={product.image} alt={product.name} className="w-full h-48 object-contain rounded-lg mb-4 group-hover:scale-105 transition-transform" />
@@ -64,9 +65,9 @@ const CategoryPage = () => {
                 </ul>
 
                 {/* Add to Cart Button */}
-                <button className="mt-4 w-full flex items-center justify-center gap-2 bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+                <Button styles={"mt-4 w-full flex items-center justify-center gap-2 bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors"}>
                   <FiShoppingCart /> Add to Cart
-                </button>
+                </Button>
               </div>
             ))}
           </div>
