@@ -45,8 +45,8 @@ const CategoryPage = () => {
                 className="relative bg-white rounded-2xl shadow-lg overflow-hidden p-4 cursor-pointer hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] hover:scale-[1.05] transition-all duration-300 group"
               >
                 {/* Wishlist Button */}
-                <Button styles={"absolute top-3 right-3 bg-white p-2 rounded-full shadow-md hover:bg-red-500 hover:text-white transition-colors"}>
-                  <FiHeart size={20} />
+                <Button>
+                  <FiHeart className="absolute top-3 right-3 text-2xl hover:text-red-500 transition-all cursor-pointer" />
                 </Button>
 
                 {/* Product Image */}

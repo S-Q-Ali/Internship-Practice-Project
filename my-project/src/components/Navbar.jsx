@@ -5,7 +5,6 @@ import { LuSunMoon, LuSun } from "react-icons/lu";
 import { useState } from "react";
 import { BsTruck } from "react-icons/bs";
 import Button from "../components/Button"
-import { useNavigate } from "react-router-dom";
 
 export default function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
