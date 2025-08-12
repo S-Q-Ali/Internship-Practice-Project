@@ -15,6 +15,7 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 import {productData} from "../data/data"
+import Button from "./Button";
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -137,23 +138,23 @@ export default function Products() {
 
         {/* Controls */}
         <div className="flex justify-between items-center mb-8">
-          <button
+          <Button
             aria-label="Previous"
-            onClick={() =>
+            handleclick={() =>
               setCurrentIndex((p) => (p - 1 + totalSlides) % totalSlides)
             }
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300"
+            styles={"p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300"}
           >
             <FiChevronLeft size={24} />
-          </button>
+          </Button>
 
           <div className="flex space-x-2">
             {Array.from({ length: totalSlides }).map((_, idx) => (
-              <button
+              <Button
                 key={idx}
                 aria-label={`Go to slide ${idx + 1}`}
-                onClick={() => setCurrentIndex(idx)}
-                className={`w-3 h-3 rounded-full transition-all ${
+                handleclick={() => setCurrentIndex(idx)}
+                styles={`w-3 h-3 rounded-full transition-all ${
                   idx === currentIndex
                     ? "bg-purple-600 w-6"
                     : "bg-gray-300 dark:bg-gray-600"
@@ -162,13 +163,13 @@ export default function Products() {
             ))}
           </div>
 
-          <button
+          <Button
             aria-label="Next"
-            onClick={() => setCurrentIndex((p) => (p + 1) % totalSlides)}
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300"
+            handleclick={() => setCurrentIndex((p) => (p + 1) % totalSlides)}
+            styles={"p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300"}
           >
             <FiChevronRight size={24} />
-          </button>
+          </Button>
         </div>
 
         {/* Slider (viewport) */}
@@ -236,9 +237,9 @@ export default function Products() {
                             <span className="text-xl font-bold">
                               ${product.price}
                             </span>
-                            <button className="flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:from-purple-700 hover:to-blue-700">
+                            <Button styles={"flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:from-purple-700 hover:to-blue-700"}>
                               <FiShoppingCart className="mr-2" /> Add to Cart
-                            </button>
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -252,10 +253,10 @@ export default function Products() {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <button className="inline-flex items-center px-6 py-3 rounded-md text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+          <Button styles={"inline-flex items-center px-6 py-3 rounded-md text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"}>
             View All Products
             <FiArrowRight className="ml-2" />
-          </button>
+          </Button>
         </div>
       </div>
     </section>

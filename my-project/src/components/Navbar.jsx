@@ -4,7 +4,7 @@ import { RiShoppingCartLine } from "react-icons/ri";
 import { LuSunMoon, LuSun } from "react-icons/lu";
 import { useState } from "react";
 import { BsTruck } from "react-icons/bs";
-
+import Button from "../components/Button"
 
 export default function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,9 +29,9 @@ export default function Navbar({ darkMode, setDarkMode }) {
                 placeholder="Search products, brands, categories..."
                 className="w-full pl-4 pr-12 py-2.5 text-zinc-900 placeholder:text-amber-50 border border-border border-amber-50 rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
               />
-              <button className="dark:text-amber-50 absolute right-2 top-1/2 transform -translate-y-1/2 p-2  hover:text-brand transition-colors duration-200">
+              <Button styles={"dark:text-amber-50 absolute right-2 top-1/2 transform -translate-y-1/2 p-2  hover:text-brand transition-colors duration-200"}>
                 <FiSearch className="text-xl hover:text-2xl transition-all duration-500 cursor-pointer" />
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -48,18 +48,6 @@ export default function Navbar({ darkMode, setDarkMode }) {
             >
               Products
             </Link>
-            {/* <Link
-              to="/categories"
-              className="text-foreground hover:text-brand transition-colors duration-200 font-medium"
-            >
-              Categories
-            </Link>
-            <Link
-              to="/deals"
-              className="text-foreground hover:text-brand transition-colors duration-200 font-medium"
-            >
-              Deals
-            </Link> */}
             <Link
               to="/about"
               className="text-foreground hover:text-brand transition-colors duration-200 font-medium"
@@ -74,27 +62,27 @@ export default function Navbar({ darkMode, setDarkMode }) {
             </Link>
           </div>
           <div className="flex items-center m-3">
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="text-2xl hover:text-3xl transition-all duration-300 cursor-pointer"
+            <Button
+              handleclick={() => setDarkMode(!darkMode)}
+              styles={"text-2xl hover:text-3xl transition-all duration-300 cursor-pointer"}
             >
               {darkMode ? <LuSunMoon /> : <LuSun />}
-            </button>
+            </Button>
           </div>
           <div className="flex items-center space-x-3">
-            <button className="flex items-center space-x-1">
+            <Button styles={"flex items-center space-x-1"}>
               <BsTruck className="text-xl hover:text-2xl transition-all duration-300 cursor-pointer -scale-x-100" />
               <span className="hidden sm:inline text-sm font-medium">Track</span>
-            </button>
+            </Button>
 
-            <button className="flex items-center space-x-1">
+            <Button styles={"flex items-center space-x-1"}>
               <FiUser className="text-xl hover:text-2xl transition-all duration-300 cursor-pointer" />
               <span className="hidden sm:inline text-sm font-medium">
                 Account
               </span>
-            </button>
+            </Button>
 
-            <button className="relative flex items-center space-x-1">
+            <Button styles={"relative flex items-center space-x-1"}>
               <div className="relative">
                 <RiShoppingCartLine className="text-xl hover:text-2xl transition-all duration-300 cursor-pointer" />
                 <span className="absolute -top-2 -right-2 h-2.5 w-4 bg-brand text-brand-foreground rounded-full flex items-center justify-center text-xs font-medium">
@@ -102,22 +90,22 @@ export default function Navbar({ darkMode, setDarkMode }) {
                 </span>
               </div>
               <span className="hidden sm:inline text-sm font-medium">Cart</span>
-            </button>
+            </Button>
 
-            <button className=" hover:text-red-500 ">
-              <FiHeart className="text-xl transition-all duration-300 cursor-pointer hover:text-2xl" />
-            </button>
+            <Button>
+              <FiHeart className="text-xl transition-all duration-300 cursor-pointer hover:text-2xl hover:text-red-500" />
+            </Button>
 
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-muted-foreground hover:text-brand transition-colors duration-200"
+            <Button
+              handleclick={() => setIsMenuOpen(!isMenuOpen)}
+              styles={"lg:hidden p-2 text-muted-foreground hover:text-brand transition-colors duration-200"}
             >
               {isMenuOpen ? (
                 <FiX className="w-5 h-5" />
               ) : (
                 <FiMenu className="w-5 h-5" />
               )}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -129,9 +117,9 @@ export default function Navbar({ darkMode, setDarkMode }) {
               placeholder="Search products..."
               className="w-full pl-4 pr-12 py-2.5 bg-background border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all duration-200 text-sm"
             />
-            <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-muted-foreground hover:text-brand transition-colors duration-200">
+            <Button styles={"absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-muted-foreground hover:text-brand transition-colors duration-200"}>
               <FiSearch className="w-4 h-4" />
-            </button>
+            </Button>
           </div>
         </div>
 

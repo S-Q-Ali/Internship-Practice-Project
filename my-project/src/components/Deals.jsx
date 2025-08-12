@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { FiClock, FiChevronRight } from "react-icons/fi";
 import {deals} from "../data/data"
-
+import Button from "../components/Button"
 /* ---------------------------
   Helper: chunk array into pages
 ---------------------------- */
@@ -130,18 +130,18 @@ export default function DealsSection() {
 
         {/* controls */}
         <div className="flex justify-center mb-4 gap-2">
-          <button
-            onClick={prev}
-            className="p-2 bg-gradient-to-r from-amber-500 to-yellow-300 rounded-md text-black font-semibold shadow-md hover:scale-105 transition"
+          <Button
+          handleclick={()=>prev()}
+            styles={"p-2 bg-gradient-to-r from-amber-500 to-yellow-300 rounded-md text-black font-semibold shadow-md hover:scale-105 transition cursor-pointer"}
           >
             Prev
-          </button>
-          <button
-            onClick={next}
-            className="p-2 bg-gradient-to-r from-amber-500 to-yellow-300 rounded-md text-black font-semibold shadow-md hover:scale-105 transition"
+          </Button>
+          <Button
+            handleclick={()=>next()}
+            styles={"p-2 bg-gradient-to-r from-amber-500 to-yellow-300 rounded-md text-black font-semibold shadow-md hover:scale-105 transition cursor-pointer"}
           >
             Next
-          </button>
+          </Button>
         </div>
 
         {/* slider */}
@@ -199,9 +199,9 @@ export default function DealsSection() {
                           </span>
                         </div>
 
-                        <button className="w-full mt-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold py-2 rounded-lg flex items-center justify-center hover:scale-105 transition">
+                        <Button styles={"w-full mt-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold py-2 rounded-lg flex items-center justify-center hover:scale-105 transition"}>
                           Grab Deal <FiChevronRight className="ml-2" />
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -214,10 +214,10 @@ export default function DealsSection() {
         {/* indicators */}
         <div className="flex justify-center gap-2 mt-6">
           {Array.from({ length: slidesCount }).map((_, i) => (
-            <button
+            <Button
               key={i}
-              onClick={() => setSlideIndex(i)}
-              className={`w-3 h-3 rounded-full ${
+              handleclick={() => setSlideIndex(i)}
+              styles={`w-3 h-3 rounded-full ${
                 i === slideIndex ? "bg-amber-500 w-6" : "bg-gray-300"
               }`}
             />
