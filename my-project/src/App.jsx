@@ -6,6 +6,9 @@ import Products from "./components/Products";
 import DealsSection from "./components/Deals";
 import CategoryPage from "./components/Categories";
 import CategorySection from "./components/CategorySection";
+import CartDrawer from "./components/Cart"; 
+import { CartDrawerProvider } from "./components/CartDrawerContext"; 
+import Checkout from "./components/Checkout";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -19,26 +22,38 @@ export default function App() {
   }, [darkMode]);
 
   return (
-    <div className={darkMode ? "dark" : ""}>
-      <BrowserRouter>
-        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+    <CartDrawerProvider>
+      <div className={darkMode ? "dark" : ""}>
+        <BrowserRouter>
+          <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Hero />
-                <CategorySection darkMode={darkMode} setDarkMode={setDarkMode} />
-                <Products darkMode={darkMode} setDarkMode={setDarkMode} />
-                <DealsSection darkMode={darkMode} setDarkMode={setDarkMode} />
-              </>
-            }
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Hero />
+                  <CategorySection darkMode={darkMode} setDarkMode={setDarkMode} />
+                  <Products darkMode={darkMode} setDarkMode={setDarkMode} />
+                  <DealsSection darkMode={darkMode} setDarkMode={setDarkMode} />
+                </>
+              }
+            />
 
-          <Route path="/categories" element={<CategoryPage darkMode={darkMode} setDarkMode={setDarkMode} />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+            <Route
+              path="/categories"
+              element={<CategoryPage darkMode={darkMode} setDarkMode={setDarkMode} />}
+            />
+              <Route
+              path="/checkout"
+              element={<Checkout darkMode={darkMode} setDarkMode={setDarkMode} />}
+            />
+          </Routes>
+
+          {/* Mount cart drawer globally so it works on all pages */}
+          <CartDrawer />
+        </BrowserRouter>
+      </div>
+    </CartDrawerProvider>
   );
 }
