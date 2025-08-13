@@ -14,48 +14,48 @@ import {
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
-import {productData} from "../data/data"
+import { productData } from "../data/data";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import { useCartDrawer } from "./CartDrawerContext";
+
 gsap.registerPlugin(ScrollTrigger);
 
+export default function Products({ darkMode, setDarkMode }) {
+  const navigate = useNavigate();
+  const { addToCart } = useCartDrawer();
+  
+  const handleViewProduct = (category) => {
+    navigate("/categories", { state: { scrollTo: category } });
+  };
 
-export default function Products() {
-  const navigate=useNavigate();
-  const handleViewProduct=(category)=>{
-    navigate("/categories",{state:{scrollTo:category}});
-  }
-  // slide index (which slide-group is visible)
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // visible cards per slide: default to desktop; will be corrected on mount/resize
   const [visibleCount, setVisibleCount] = useState(4);
 
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
-  const cardsRef = useRef([]); // refs for reveal animations
+  const cardsRef = useRef([]);
   const intervalRef = useRef(null);
 
-  // recompute chunks whenever visibleCount changes
+  // Responsive product chunks
   const chunkedProducts = useMemo(() => {
     const chunks = [];
-    const n = visibleCount;
-    for (let i = 0; i < productData.length; i += n) {
-      chunks.push(productData.slice(i, i + n));
+    for (let i = 0; i < productData.length; i += visibleCount) {
+      chunks.push(productData.slice(i, i + visibleCount));
     }
     return chunks;
   }, [visibleCount]);
 
   const totalSlides = chunkedProducts.length;
 
-  // clamp index when totalSlides changes (prevents out-of-range index)
+  // Clamp index when totalSlides changes
   useEffect(() => {
     if (currentIndex >= totalSlides) {
       setCurrentIndex(Math.max(0, totalSlides - 1));
     }
   }, [totalSlides, currentIndex]);
 
-  // responsive breakpoints (run on mount and on resize)
+  // Responsive breakpoints
   useEffect(() => {
     const updateVisible = () => {
       const w = window.innerWidth;
@@ -68,7 +68,7 @@ export default function Products() {
     return () => window.removeEventListener("resize", updateVisible);
   }, []);
 
-  // Autoplay (pause/resume on hover)
+  // Autoplay functionality
   const startAuto = useCallback(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -85,9 +85,8 @@ export default function Products() {
     return () => clearInterval(intervalRef.current);
   }, [startAuto, totalSlides]);
 
-  // Card reveal animations (GSAP) — optional, and does not animate the track transform
+  // GSAP animations
   useEffect(() => {
-    // reset refs array so we don't keep stale refs across chunk changes
     cardsRef.current = cardsRef.current.slice(0, productData.length);
 
     if (!sectionRef.current) return;
@@ -115,26 +114,31 @@ export default function Products() {
       ctx.revert();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
-  }, [chunkedProducts]); // re-run when chunks change
+  }, [chunkedProducts]);
 
-  // compute track transform percent — shift by one viewport (slide) each increment
-  // note: translate% relative to the track; the needed percent is (currentIndex * (100 / totalSlides))%
+  // Track transform style
   const trackStyle = {
     width: `${totalSlides * 100}%`,
     transform: `translateX(-${currentIndex * (100 / totalSlides)}%)`,
     transition: "transform 600ms cubic-bezier(.22,.9,.3,1)",
   };
 
+  // Handle add to cart with animation
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    // You could add a small animation here if desired
+  };
+
   return (
     <section
       ref={sectionRef}
-      className="py-16 bg-gradient-to-b from-black to-purple-300 dark:fron-black dark:to-gray-700 overflow-hidden"
+      className="py-16 bg-gradient-to-b from-black to-purple-300 dark:from-black dark:to-gray-700 overflow-hidden"
     >
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="section-header text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 mb-4 pb-2">
-            GAMING PERIPHIRALS
+            GAMING PERIPHERALS
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Premium gear designed for competitive gamers and streamers
@@ -177,22 +181,19 @@ export default function Products() {
           </Button>
         </div>
 
-        {/* Slider (viewport) */}
+        {/* Slider */}
         <div
           className="overflow-hidden relative mb-8"
           onMouseEnter={stopAuto}
           onMouseLeave={startAuto}
         >
-          {/* track */}
           <div ref={trackRef} className="flex" style={trackStyle}>
             {chunkedProducts.map((group, slideIndex) => (
-              // slide = viewport width; its width MUST be (100 / totalSlides)% of the track
               <div
                 key={slideIndex}
                 className="flex"
                 style={{ width: `${100 / totalSlides}%` }}
               >
-                {/* each card inside slide gets width = 100 / visibleCount of the slide */}
                 {group.map((product, i) => {
                   const cardIndex = slideIndex * visibleCount + i;
                   return (
@@ -242,7 +243,10 @@ export default function Products() {
                             <span className="text-xl font-bold">
                               ${product.price}
                             </span>
-                            <Button styles={"flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:from-purple-700 hover:to-blue-700"}>
+                            <Button 
+                              handleclick={() => handleAddToCart(product)}
+                              styles={"flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:from-purple-700 hover:to-blue-700"}
+                            >
                               <FiShoppingCart className="mr-2" /> Add to Cart
                             </Button>
                           </div>
@@ -258,7 +262,10 @@ export default function Products() {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <Button handleclick={()=>handleViewProduct('category')} styles={"cursor-pointer inline-flex items-center px-6 py-3 rounded-md text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"}>
+          <Button 
+            handleclick={() => handleViewProduct('category')}
+            styles={"cursor-pointer inline-flex items-center px-6 py-3 rounded-md text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"}
+          >
             View All Products
             <FiArrowRight className="ml-2" />
           </Button>
