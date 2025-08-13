@@ -21,7 +21,7 @@ import { useCartDrawer } from "./CartDrawerContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Products({ darkMode, setDarkMode }) {
+export default function Products() {
   const navigate = useNavigate();
   const { addToCart } = useCartDrawer();
   
@@ -132,7 +132,7 @@ export default function Products({ darkMode, setDarkMode }) {
   return (
     <section
       ref={sectionRef}
-      className="py-16 bg-gradient-to-b from-black to-purple-300 dark:from-black dark:to-gray-700 overflow-hidden"
+       className="py-16 bg-gradient-to-b from-black to-purple-300 dark:fron-black dark:to-gray-700 overflow-hidden"
     >
       <div className="container mx-auto px-4">
         {/* Header */}
@@ -203,12 +203,12 @@ export default function Products({ darkMode, setDarkMode }) {
                       style={{ width: `${100 / visibleCount}%` }}
                       ref={(el) => (cardsRef.current[cardIndex] = el)}
                     >
-                      <div className="from-purple-300 to-zinc-900 dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                      <div className="from-purple-300 via-red-700 to-red-800  dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-all duration-300 h-full">
                         <div className="relative h-48 overflow-hidden">
                           <img
                             src={product.image}
                             alt={product.name}
-                            className="w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-105"
+                            className="w-full h-full object-contain p-4 transition-transform duration-300"
                           />
                           <div className="absolute top-2 right-2 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full">
                             {product.category === "headphone"
@@ -217,7 +217,7 @@ export default function Products({ darkMode, setDarkMode }) {
                           </div>
                         </div>
                         <div className="p-6">
-                          <div className="flex justify-between items-start mb-2">
+                          <div className="flex justify-between items-start mb-8">
                             <h3 className="font-bold text-lg">
                               {product.name}
                             </h3>

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { CheckCircleIcon, ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
 
-export default function Checkout({ darkMode, setDarkMode }) {
+export default function Checkout() {
   const { 
     cartItems, 
     totalPrice, 

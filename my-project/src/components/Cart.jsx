@@ -3,6 +3,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useCartDrawer } from "./CartDrawerContext";
 import { Link } from "react-router-dom";
+import Button from "./Button";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { FiMinus,FiPlus } from "react-icons/fi";
+
+
 
 export default function CartDrawer() {
   const {
@@ -50,51 +55,39 @@ export default function CartDrawer() {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div className="flex h-full flex-col bg-gray-900 shadow-xl border-l border-indigo-500/20">
+                  <div className="flex h-full flex-col bg-transparent shadow-xl border-l border-indigo-500/20">
                     {/* Header */}
                     <div className="flex items-center justify-between px-6 py-4 border-b border-indigo-500/20 bg-gradient-to-r from-indigo-900/10 to-transparent">
                       <Dialog.Title className="text-xl font-bold text-white">
                         YOUR CART ({totalItems})
                       </Dialog.Title>
-                      <button
-                        onClick={() => setOpen(false)}
-                        className="p-2 text-gray-400 hover:text-white rounded-full hover:bg-gray-800 transition-all"
+                      <Button
+                        handleclick={() => setOpen(false)}
+                        styles={"p-2 text-gray-400 hover:text-white rounded-full hover:bg-gray-800 transition-all"}
                       >
                         <XMarkIcon className="h-6 w-6" />
-                      </button>
+                      </Button>
                     </div>
 
                     {/* Cart content */}
                     <div className="flex-1 overflow-y-auto p-6">
                       {cartItems.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-full text-center">
-                          <div className="w-24 h-24 bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                            <svg
-                              className="w-12 h-12 text-indigo-500"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={1.5}
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                              />
-                            </svg>
+                          <div className="w-24 h-24 bg-gradient-to-r from-red-900 via-purple-900 to-zinc-900 rounded-full flex items-center justify-center mb-4">
+                           < MdOutlineShoppingCart className="text-6xl text-amber-50" />
                           </div>
                           <h3 className="text-lg font-medium text-gray-300">
                             Your cart is empty
                           </h3>
-                          <p className="mt-1 text-sm text-gray-500">
+                          <p className="mt-1 text-sm text-gray-500 ">
                             Start adding some products!
                           </p>
-                          <button
-                            onClick={() => setOpen(false)}
-                            className="mt-6 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                          <Button
+                            handleclick={() => setOpen(false)}
+                            styles={"mt-6 px-4 py-2 bg-gradient-to-r from-red-900 via-purple-900 to-zinc-900 text-white rounded-md transition-colors hover:bg-gradient-to-r hover:from-red-600 hover:via-purple-600 hover:to-zinc-800 transition-all duration-1000 cursor-pointer"}
                           >
                             Browse Products
-                          </button>
+                          </Button>
                         </div>
                       ) : (
                         <ul className="divide-y divide-gray-800">
@@ -129,69 +122,45 @@ export default function CartDrawer() {
 
                                   <div className="flex-1 flex items-end justify-between text-sm">
                                     <div className="flex items-center space-x-2">
-                                      <button
-                                        onClick={() =>
+                                      <Button
+                                        handleclick={() =>
                                           updateQuantity(
                                             product.id,
                                             product.quantity - 1
                                           )
                                         }
-                                        className="text-gray-400 hover:text-white p-1"
+                                        styles={"text-gray-400 text-xl hover:text-white p-1"}
                                       >
                                         <span className="sr-only">
                                           Decrease quantity
                                         </span>
-                                        <svg
-                                          className="h-4 w-4"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M20 12H4"
-                                          />
-                                        </svg>
-                                      </button>
+                                        <FiMinus />
+                                      </Button>
                                       <span className="text-white font-medium">
                                         {product.quantity}
                                       </span>
-                                      <button
-                                        onClick={() =>
+                                      <Button
+                                        handleclick={() =>
                                           updateQuantity(
                                             product.id,
                                             product.quantity + 1
                                           )
                                         }
-                                        className="text-gray-400 hover:text-white p-1"
+                                        styles={"text-gray-400 hover:text-white text-xl p-1"}
                                       >
                                         <span className="sr-only">
                                           Increase quantity
                                         </span>
-                                        <svg
-                                          className="h-4 w-4"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M12 4v16m8-8H4"
-                                          />
-                                        </svg>
-                                      </button>
+                                        <FiPlus />
+                                      </Button>
                                     </div>
 
-                                    <button
-                                      onClick={() => removeFromCart(product.id)}
-                                      className="text-gray-500 hover:text-red-500 transition-colors"
+                                    <Button
+                                      handleclick={() => removeFromCart(product.id)}
+                                      styles={"text-gray-500 hover:text-red-500 transition-colors cursor-pointer"}
                                     >
                                       <TrashIcon className="h-5 w-5" />
-                                    </button>
+                                    </Button>
                                   </div>
                                 </div>
                               </div>
@@ -221,13 +190,13 @@ export default function CartDrawer() {
                         <div className="mt-4 flex justify-center text-sm text-gray-500">
                           <p>
                             or{" "}
-                            <button
-                              type="button"
-                              className="text-indigo-400 hover:text-indigo-300 font-medium"
-                              onClick={() => setOpen(false)}
+                            <Button
+                              type="Button"
+                              styles={"text-indigo-400 hover:text-indigo-300 font-medium"}
+                              handleclick={() => setOpen(false)}
                             >
                               Continue Shopping
-                            </button>
+                            </Button>
                           </p>
                         </div>
                       </div>
