@@ -137,7 +137,7 @@ export const productData = [
 export const categories = [
     {
       title: "BUY LATEST HEADPHONES",
-      gradient: "from-pink-500 to-red-600",
+      gradient: "from-pink-500 to-red-600 dark:from-zinc-950 dark:via-purple-950 dark:to-red-950",
       products: [
         { id: 1, name: "Wireless Noise-Canceling Headphones", category: "headphones", price: 199.99, rating: 4.7, image: headphone_1, features: ["Bluetooth 5.0", "ANC", "40h Battery"] },
         { id: 2, name: "Wireless Noise-Canceling Headphones", category: "headphones", price: 199.99, rating: 4.7, image: headphone_2, features: ["Bluetooth 5.0", "ANC", "40h Battery"] },
@@ -146,7 +146,7 @@ export const categories = [
     },
     {
       title: "BUY LATEST MOUSES",
-      gradient: "from-orange-500 to-yellow-500",
+      gradient: "from-orange-500 to-yellow-500 dark:from-zinc-950 dark:via-purple-950 dark:to-red-950",
       products: [
         { id: 1, name: "Ergonomic Wireless Mouse", category: "mouse", price: 59.99, rating: 4.5, image: mouse_1, features: ["Silent Click", "Rechargeable", "Adjustable DPI"] },
         { id: 2, name: "Ergonomic Wireless Mouse", category: "mouse", price: 59.99, rating: 4.5, image: mouse_2, features: ["Silent Click", "Rechargeable", "Adjustable DPI"] },
@@ -154,8 +154,8 @@ export const categories = [
       ],
     },
     { 
-      title: "BUY LATEST SPEAKERS",
-      gradient: "from-purple-500 to-indigo-600",
+      title: "BUY LATEST SPEAKERS", 
+      gradient: "from-purple-500 to-indigo-600 dark:from-zinc-950 dark:via-purple-950 dark:to-red-950",
       products: [
         { id: 1, name: "Portable Bluetooth Speaker", category: "speaker", price: 89.99, rating: 4.6, image: speaker_1, features: ["Waterproof", "12h Playtime", "Deep Bass"] },
         { id: 2, name: "Portable Bluetooth Speaker", category: "speaker", price: 89.99, rating: 4.6, image: speaker_2, features: ["Waterproof", "12h Playtime", "Deep Bass"] },
@@ -164,7 +164,7 @@ export const categories = [
     },
     {
       title: "BUY LATEST KEYBOARDS",
-      gradient: "from-green-500 to-emerald-700",
+      gradient: "from-green-500 to-emerald-700 dark:from-zinc-950 dark:via-purple-950 dark:to-red-950",
       products: [
         { id: 1, name: "Mechanical Gaming Keyboard", category: "keyboard", price: 129.99, rating: 4.8, image: keyboard_1, features: ["RGB Backlit", "Tactile Switches", "Anti-Ghosting"] },
         { id: 2, name: "Mechanical Gaming Keyboard", category: "keyboard", price: 129.99, rating: 4.8, image: keyboard_2, features: ["RGB Backlit", "Tactile Switches", "Anti-Ghosting"] },
