@@ -4,6 +4,7 @@ import { useCartDrawer } from "./CartDrawerContext";
 import { useNavigate } from "react-router-dom";
 import { CheckCircleIcon, ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
+import { Link } from "react-router-dom";
 
 export default function Checkout() {
   const { 
@@ -11,10 +12,13 @@ export default function Checkout() {
     totalPrice, 
     removeFromCart, 
     updateQuantity,
-    clearCart 
+    clearCart,
   } = useCartDrawer();
   
   const navigate = useNavigate();
+  const handleViewitem = (category) => {
+    navigate("/categories", { state: { scrollTo: category } });
+  };
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -98,13 +102,13 @@ export default function Checkout() {
           Your cart is empty
         </h3>
         <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Add some products before checking out
+          Add some items before checking out
         </p>
         <Button
-          handleClick={() => navigate("/categories")}
+           handleclick={() => handleViewitem('category')}
           styles="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow"
         >
-          Browse Products
+          Browse items
         </Button>
       </div>
     );
@@ -116,10 +120,10 @@ export default function Checkout() {
         {/* Header */}
         <div className="flex items-center mb-8">
           <Button
-            handleClick={() => navigate(-1)}
+            handleclick={() => navigate(-1)}
             styles="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
           >
-            <ArrowLeftIcon className="h-6 w-6" />
+            <Link to='/'><ArrowLeftIcon className="h-6 w-6" /></Link>
           </Button>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white ml-4">
             Checkout ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})
@@ -149,26 +153,26 @@ export default function Checkout() {
                       <h3 className="font-medium text-gray-900 dark:text-white">
                         {item.name}
                       </h3>
-                      <p className="font-medium">
+                      <p className="font-medium dark:text-amber-50">
                         ${(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
                     <div className="flex items-center mt-2">
                       <Button
-                        handleClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        styles="p-1 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400"
+                        handleclick={() => updateQuantity(item.id, item.quantity - 1)}
+                        styles="p-1 text-gray-500 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
                       >
-                        −
+                        -
                       </Button>
-                      <span className="mx-2 w-8 text-center">{item.quantity}</span>
+                      <span className="mx-2 w-8 text-center dark:text-amber-50">{item.quantity}</span>
                       <Button
-                        handleClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        styles="p-1 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400"
+                        handleclick={() => updateQuantity(item.id, item.quantity + 1)}
+                        styles="p-1 text-gray-500 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
                       >
                         +
                       </Button>
                       <Button
-                        handleClick={() => removeFromCart(item.id)}
+                        handleclick={() => removeFromCart(item.id)}
                         styles="ml-4 text-sm text-red-500 hover:text-red-700 dark:hover:text-red-400"
                       >
                         Remove
@@ -180,14 +184,14 @@ export default function Checkout() {
             </div>
             <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
               <div className="flex justify-between py-2">
-                <span className="text-gray-600 dark:text-gray-400">Subtotal</span>
-                <span className="font-medium">${totalPrice.toFixed(2)}</span>
+                <span className="text-gray-600 dark:text-amber-50">Subtotal</span>
+                <span className="font-medium dark:text-amber-50">${totalPrice.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between py-2">
-                <span className="text-gray-600 dark:text-gray-400">Shipping</span>
-                <span className="font-medium">Free</span>
+              <div className="flex justify-between py-2 ">
+                <span className="text-gray-600 dark:text-amber-50">Shipping</span>
+                <span className="font-medium dark:text-amber-50">Free</span>
               </div>
-              <div className="flex justify-between py-2 text-lg font-bold">
+              <div className="flex justify-between py-2 text-lg font-bold dark:text-amber-50">
                 <span>Total</span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
