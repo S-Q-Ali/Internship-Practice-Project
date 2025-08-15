@@ -4,7 +4,6 @@ import { useCartDrawer } from "./CartDrawerContext";
 import { useNavigate } from "react-router-dom";
 import { CheckCircleIcon, ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
-import { Link } from "react-router-dom";
 
 export default function Checkout() {
   const { 
@@ -16,9 +15,7 @@ export default function Checkout() {
   } = useCartDrawer();
   
   const navigate = useNavigate();
-  const handleViewitem = (category) => {
-    navigate("/categories", { state: { scrollTo: category } });
-  };
+
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -105,7 +102,7 @@ export default function Checkout() {
           Add some items before checking out
         </p>
         <Button
-           handleclick={() => handleViewitem('category')}
+           handleclick={() => navigate(-1)}
           styles="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow"
         >
           Browse items
@@ -123,7 +120,7 @@ export default function Checkout() {
             handleclick={() => navigate(-1)}
             styles="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
           >
-            <Link to='/'><ArrowLeftIcon className="h-6 w-6" /></Link>
+            <ArrowLeftIcon className="h-6 w-6" />
           </Button>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white ml-4">
             Checkout ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})
